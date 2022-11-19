@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 export default function ListUser() {
 
     const [users, setUsers] = useState([]);
@@ -10,14 +11,14 @@ export default function ListUser() {
     }, []);
 
     function getUsers() {
-        axios.get('http://localhost:8888/api/users/').then(function(response) {
+        axios.get(baseURL + '/api/users/').then(function (response) {
             console.log(response.data);
             setUsers(response.data);
         });
     }
 
     const deleteUser = (id) => {
-        axios.delete(`http://localhost:8888/api/user/${id}/delete`).then(function(response){
+        axios.delete(baseURL + `/api/user/${id}/delete`).then(function (response) {
             console.log(response.data);
             getUsers();
         });
@@ -43,12 +44,12 @@ export default function ListUser() {
                             <td>{user.email}</td>
                             <td>{user.mobile}</td>
                             <td>
-                                <Link to={`user/${user.id}/edit`} style={{marginRight: "10px"}}>Edit</Link>
+                                <Link to={`user/${user.id}/edit`} style={{ marginRight: "10px" }}>Edit</Link>
                                 <button onClick={() => deleteUser(user.id)}>Delete</button>
                             </td>
                         </tr>
                     )}
-                    
+
                 </tbody>
             </table>
         </div>

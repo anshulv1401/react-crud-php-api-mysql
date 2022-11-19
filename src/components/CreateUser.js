@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 export default function ListUser() {
     const navigate = useNavigate();
 
@@ -10,16 +11,16 @@ export default function ListUser() {
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}));
+        setInputs(values => ({ ...values, [name]: value }));
     }
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:8888/api/user/save', inputs).then(function(response){
+        axios.post(baseURL + '/api/user/save', inputs).then(function (response) {
             console.log(response.data);
             navigate('/');
         });
-        
+
     }
     return (
         <div>
@@ -39,7 +40,7 @@ export default function ListUser() {
                             <th>
                                 <label>Email: </label>
                             </th>
-                            <td> 
+                            <td>
                                 <input type="text" name="email" onChange={handleChange} />
                             </td>
                         </tr>
@@ -52,7 +53,7 @@ export default function ListUser() {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan="2" align ="right">
+                            <td colSpan="2" align="right">
                                 <button>Save</button>
                             </td>
                         </tr>

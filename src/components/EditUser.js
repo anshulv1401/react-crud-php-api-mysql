@@ -2,19 +2,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 export default function ListUser() {
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState([]);
 
-    const {id} = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
         getUser();
     }, []);
 
     function getUser() {
-        axios.get(`http://localhost:8888/api/user/${id}`).then(function(response) {
+        axios.get(baseURL + `/api/user/${id}`).then(function (response) {
             console.log(response.data);
             setInputs(response.data);
         });
@@ -23,16 +24,16 @@ export default function ListUser() {
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setInputs(values => ({...values, [name]: value}));
+        setInputs(values => ({ ...values, [name]: value }));
     }
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.put(`http://localhost:8888/api/user/${id}/edit`, inputs).then(function(response){
+        axios.put(baseURL + `/api/user/${id}/edit`, inputs).then(function (response) {
             console.log(response.data);
             navigate('/');
         });
-        
+
     }
     return (
         <div>
@@ -52,7 +53,7 @@ export default function ListUser() {
                             <th>
                                 <label>Email: </label>
                             </th>
-                            <td> 
+                            <td>
                                 <input value={inputs.email} type="text" name="email" onChange={handleChange} />
                             </td>
                         </tr>
@@ -65,7 +66,7 @@ export default function ListUser() {
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan="2" align ="right">
+                            <td colSpan="2" align="right">
                                 <button>Save</button>
                             </td>
                         </tr>

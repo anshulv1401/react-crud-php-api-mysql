@@ -6,7 +6,7 @@
 		private $server = 'localhost';
 		private $dbname = 'react_crud';
 		private $user = 'root';
-		private $pass = '';
+		private $pass = 'root';
 
 		public function connect() {
 			try {
